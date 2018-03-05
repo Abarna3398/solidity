@@ -11,7 +11,7 @@
 
   <label>Owner address: <input id="oa" type="text" /></label><br>
 <label>New address:<input id="na" type="text" /></label><br>
-<label>Amount:<input id="a" type="number" /><br></label>
+<label>Amount:<input id="a" type="text" /><br></label>
 <label>From address:<input id="fa"  type="text" /><br></label>
 <label>To address:<input id="ta"  type="text" /><br></label>
 <label>Spender:<input id="s"  type="text" /><br></label>
@@ -285,211 +285,6 @@
 		"type": "event"
 	}
 ]);
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "withdraw",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_value",
-				"type": "uint256"
-			},
-			{
-				"name": "_owner",
-				"type": "address"
-			}
-		],
-		"name": "deposit",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_owner",
-				"type": "address"
-			}
-		],
-		"name": "balanceOf",
-		"outputs": [
-			{
-				"name": "balance",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "transfer",
-		"outputs": [
-			{
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "deposit",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_owner",
-				"type": "address"
-			},
-			{
-				"name": "_spender",
-				"type": "address"
-			}
-		],
-		"name": "allowance",
-		"outputs": [
-			{
-				"name": "remaining",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "Transfer",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"name": "_owner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"name": "_spender",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "Approval",
-		"type": "event"
-	}
-]
 var oadd=document.getElementById("oa");
 var nadd=document.getElementById("na");
 var amnt=document.getElementById("a");
@@ -500,7 +295,7 @@ var res = document.getElementById("r");
 var output=document.getElementById('hashresult');
 var preoutput = document.getElementById('prehashresult');
 
-var bw=bwcon.at('0xf08fb1ff8b21fbfe0f4de0b91f9dbc8e1228b7c0')
+var bw=bwcon.at('0xb5263b4a3b456fbf125429f68bf6bd346a7582a2')
  web3.version.getNetwork((err, netId) => {
             switch (netId) {
               case "1":
@@ -537,16 +332,17 @@ function deposit(){
 function withdraw()
 	{
 	return bw.withdraw(amnt.value,function(err,res){
-                   if (!err) {
+                   if  (!err) {
                       output.innerText = res;
                 }
                 else{
                      output.innerText = "Error";
                 }
 });
+}
 function transfer()
 	{
-	return bw.transfer(toadd.value,amnt.value,function(err,res)
+	return bw.transfer(toadd.value,amnt.value,function(err,res){
 	 if(!err) {
                     output.innerText = res;
                 }
@@ -559,7 +355,7 @@ function transfer()
 }
 function bal()
 	{
-	return bw.balaneOf(oadd.value,amnt.value,function(err,res)
+	return bw.balanceOf(oadd.value,function(err,res){
 	 if(!err) {
                     output.innerText = res;
                 }
@@ -567,9 +363,10 @@ function bal()
                   output.innerText = "Error";
                 }
               });
+}
 function approve()
 	{
-	return bw.approve(spend.value,amnt.value,function(err,res)
+	return bw.approve(spend.value,amnt.value,function(err,res){
 	 if(!err) {
                     output.innerText = res;
                 }
@@ -577,9 +374,10 @@ function approve()
                   output.innerText = "Error";
                 }
               });
+}
 function allowance()
 	{
-	return bw.allowance(oadd.value,spend.value,function(err,res)
+	return bw.allowance(oadd.value,spend.value,function(err,res){
 	 if(!err) {
                     output.innerText = res;
                 }
@@ -587,9 +385,10 @@ function allowance()
                   output.innerText = "Error";
                 }
               });
+}
 function transferOwnership()
 	{
-	return bw.transferOwnership(na.value,function(err,res)
+	return bw.transferOwnership(na.value,function(err,res){
 	 if(!err) {
                     output.innerText = res;
                 }
@@ -597,9 +396,10 @@ function transferOwnership()
                   output.innerText = "Error";
                 }
               });
+}
 function transferFrom()
 	{
-	return bw.transferFrom(fromadd.value,toadd.value,amnt.value,function(err,res)
+	return bw.transferFrom(oadd.value,toadd.value,amnt.value,function(err,res){
 	 if(!err) {
                     output.innerText = res;
                 }
